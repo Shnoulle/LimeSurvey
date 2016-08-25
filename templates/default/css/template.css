@@ -1,49 +1,50 @@
- body
- {
-     /*padding-top: 50px; now define in JS to fit any title length */
-     padding-bottom: 10px;
- }
+body {
+  /*padding-top: 50px; now define in JS to fit any title length */
+  padding-bottom: 10px;
+}
 
 .remove-margins {
-    margin: 0;
+  margin: 0;
 }
+
 .remove-padding {
-    padding: 0;
+  padding: 0;
 }
+
 div[id^="group-"]>div {
-    background-color: #fff;
-    margin-bottom: 1em;
+  background-color: #fff;
+  margin-bottom: 1em;
  }
 
- div[id^="group-"]>div.group-container {
-     background-color: transparent;
- }
+div[id^="group-"]>div.group-container {
+  background-color: transparent;
+}
 
 .language-changer {
-    background-color: #fff;
-    padding: 1em;
+  background-color: #fff;
+  padding: 1em;
 }
 
 #topContainer {
-    position: absolute;
-    /*top: 55px; now define in JS to fit any title length */
-    width: 100%;
-    padding: 1em;
-    border-bottom: none;
+  position: absolute;
+  /*top: 55px; now define in JS to fit any title length */
+  width: 100%;
+  padding: 1em;
+  border-bottom: none;
 }
 
 .progress {
-    height: 21px;
-    margin-bottom: 0px;
+  height: 21px;
+  margin-bottom: 0px;
 }
 
 #surveynametitle {
-    font-size: 4em;
+  font-size: 4em;
 }
 
 #surveydescription, #surveynametitle, #welcome-container h1 {
-    color: #2c3e50;
-    text-align: center;
+  color: #2c3e50;
+  text-align: center;
 }
 
 .group-name {
@@ -51,77 +52,77 @@ div[id^="group-"]>div {
 }
 
 #surveydescription, .group-name {
-    color: #2c3e50;
+  color: #2c3e50;
 }
 
 #main-row, #welcome-container {
-    background-color: transparent;
+  background-color: transparent;
 }
+
  /**
  * Navigator
  */
 
- #navigator-container {
-     margin-top: 4em;
-     padding-top: 1em;
-     padding-bottom: 1em;
- }
- #navigator-container>div
- {
- }
+#navigator-container {
+  margin-top: 4em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
 
- #main-col {
-     margin-top: 1em;
- }
+#navigator-container>div {
+}
+
+#main-col {
+  margin-top: 1em;
+}
 
 .row {
 }
 
- .col-centered{
-     float: none;
-     margin: 0 auto;
- }
+.col-centered{
+  float: none;
+  margin: 0 auto;
+}
 
 
 /**
 * navigator
 */
 #loadallbtn{
-    white-space: normal;
+  white-space: normal;
 }
-
 
 .label-col {
-    min-width: 10%;
-    position: relative;
-    min-height: 1px;
-    padding-left: 15px;
-    padding-right: 15px;
+  min-width: 10%;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
-li.responsive-content
-{
-    display: block;
-    position: relative;
-    float: left;
-    width: 100%;
+li.responsive-content {
+  display: block;
+  position: relative;
+  float: left;
+  width: 100%;
 }
 
 /* Don't wrap "No answer" for 10-point array */
 .table-in-qanda-2 thead th {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 
 /**
 * slider
 **/
+
 .numeric-multi ul.slider.computed {
   width: 22em;
 }
 
-.numeric-multi ul.computed li label,.numeric-multi ul.slider.computed li label
-  {
+.numeric-multi ul.computed li label,
+.numeric-multi ul.slider.computed li label  {
   padding-right: 0%;
 }
 
@@ -142,7 +143,7 @@ li.responsive-content
 }
 
 .numeric-multi .ui-slider-handle {
-    top: -0.35em;
+  top: -0.35em;
 }
 
 .ui-slider-1 {
@@ -216,17 +217,13 @@ li.responsive-content
     margin-bottom: 30px;
 }
 
+#indexcontainer {
+  display : none;
+}
 
-
-
-
-
-#indexcontainer {display : none;}
-
-.radio-list li
-{
-    display: block;
-    clear: both;
+.radio-list li {
+  display: block;
+  clear: both;
 }
 /*
 .checkbox, .radio
@@ -236,47 +233,44 @@ li.responsive-content
 
 .label-radio span
 {
-    display: inline-block;
-    padding-top: 3px;
+  display: inline-block;
+  padding-top: 3px;
 }
 */
-.question-item .other-label
-{
-    margin: 0px;
-    padding: 0px;
+.question-item .other-label {
+  margin: 0px;
+  padding: 0px;
 }
 
 /**
  * For em-type
  */
- .strong
- {
-     font-weight: bold;
-     display: inline-block;
-     padding: 0.2em;
- }
+.strong {
+  font-weight: bold;
+  display: inline-block;
+  padding: 0.2em;
+}
 
- .hide-tip
- {
-     display: none;
- }
+.hide-tip{
+  display: none;
+}
 
 /**
  * Surveys list
  */
 .surveys-list {
-    margin-top: 1em;
-    list-style: none;
+  margin-top: 1em;
+  list-style: none;
 }
 .surveys-list li {
-    padding: 0.5em;
+  padding: 0.5em;
 }
 .surveys-list li a {
-    margin-left: 0.5em;
+  margin-left: 0.5em;
 }
 
 #surveys-list-jumbotron {
-    text-align: center;
+  text-align: center;
 }
 
 /*#outerframeContainer {
@@ -284,11 +278,11 @@ li.responsive-content
 }*/
 
 #surveyListFooter {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 0;
-    padding-bottom: 0;
-    margin-top: 10px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  margin-top: 10px;
 }
 
 #surveyListFooter div{
@@ -296,7 +290,7 @@ li.responsive-content
 }
 
 html, body {
-    height: 90%;
+  height: 90%;
 }
 
 /**
@@ -305,116 +299,121 @@ html, body {
 
 /* Not selected */
 .gender-button button{
-    box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.16), 2px 2px 2px 0 rgba(0, 0, 0, 0.12);
-    margin-left: 1em;
+  box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.16), 2px 2px 2px 0 rgba(0, 0, 0, 0.12);
+  margin-left: 1em;
 }
 
 /* selected */
 .gender-button .btn:focus {
-    box-shadow: none;
+  box-shadow: none;
 }
 
 .gender-button .btn:focus .gender-text{
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* General */
 .gender-button .btn span {
-    display: block;
+  display: block;
 }
 
 html body .navbar.navbar-default.navbar-fixed-top {
-    z-index: 2000;
+  z-index: 2000;
 }
 
 .gender-button .gender-icon {
-    font-size: 2em;
+  font-size: 2em;
 }
 
 .navbar-brand {
-    height: auto;
+  height: auto;
 }
 
 /* For striped tables */
 .array2 {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
 /* Make sure table covers hole page */
 table {
-    width: 100%;
+  width: 100%;
 }
 
 /* Give help text some space */
 .question-help {
-    margin-top: 1em;
+  padding-bottom:5px;  
+}
+
+.questionhelp{
+  padding: 0 15px;
 }
 
 /* Wrap text in e.g. gender button "No answer */
 .wrap-normal {
-    white-space: normal;
+  white-space: normal;
 }
 
 /* Center modal vertically, used by file-upload modal */
 .modal {
-    text-align: center;
-    padding: 0!important;
+  text-align: center;
+  padding: 0!important;
 }
+
 .modal:before {
-    content: '';
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-    margin-right: -4px;
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
 }
+
 .modal-dialog {
-    display: inline-block;
-     text-align: left;
-     vertical-align: middle;
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
 }
 
 /* Make file upload modal fit to iframe */
 .file-upload-modal-body iframe {
-    height: inherit;
-    width: 100%;
-    border: none;
+  height: inherit;
+  width: 100%;
+  border: none;
 }
 .file-upload-modal-body {
-    padding: 0;
-    height: 500px;
+  padding: 0;
+  height: 500px;
 }
 .file-upload-modal-footer {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .slider.slider-horizontal {
-    width: 100%;
-
-    /* The reset button will be under the slider, so allow some margin */
-    margin-bottom: 1em;
+  width: 100%;
+  margin-bottom: 1em;  /* The reset button will be under the slider, so allow some margin */
 }
 
 /* When slider has both show-min-max and reset button, add space between
  * left badge and reset button */
+
 .slider-min-badge {
-    margin-right: 1em;
+  margin-right: 1em;
 }
 
 .slider-left-span {
-    text-align: right;
+  text-align: right;
 }
 
 .slider-right-span {
-    text-align: left;
+  text-align: left;
 }
 
 .slider-container {
-    margin-top: 3.5em;
-    margin-bottom: 2.5em;
+  margin-top: 3.5em;
+  margin-bottom: 2.5em;
 }
 
 #yii-flash-message {
-    margin-top: 3em;
+  margin-top: 3em;
 }
 
 .prefix-text-right {
@@ -468,16 +467,14 @@ table > tbody > tr > td.ddprefix {
  * On big screen only, iPad and up
  */
 @media only screen and (min-width: 768px) {
+  .table-dual-scale .separator {
+    width: 6%;
+  }
 
-    .table-dual-scale .separator {
-        width: 6%;
-    }
-
-    table > tbody > tr > td.ddsuffix {
-        padding-left: 1em;
-        vertical-align: middle;
-    }
-
+  table > tbody > tr > td.ddsuffix {
+    padding-left: 1em;
+    vertical-align: middle;
+  }
 }
 
 /**
@@ -490,264 +487,262 @@ table > tbody > tr > td.ddprefix {
  */
 @media only screen and (max-width: 801px) {
 
-    /*
-        No more table transformation applies when screen is under 801px (for a few exotic tablet screens, see #11016),
-        whereas visible-xs-block respect bootstrap standards (767px)
-        If too many bugs of this kind appears in the future, we should just refuse to support weird exotic tablet screens.
-        We should repsect standards, we should not try to fit to non standards devices.
-    */
-    .visible-xs-block{
-        display: block !important;
-    }
-    .visible-xs-inline-block{
-        display: inline-block !important;
-    }
+  /*
+      No more table transformation applies when screen is under 801px (for a few exotic tablet screens, see #11016),
+      whereas visible-xs-block respect bootstrap standards (767px)
+      If too many bugs of this kind appears in the future, we should just refuse to support weird exotic tablet screens.
+      We should repsect standards, we should not try to fit to non standards devices.
+  */
+  .visible-xs-block{
+    display: block !important;
+  }
+  .visible-xs-inline-block{
+    display: inline-block !important;
+  }
 
-    /* Remove margin */
-    .row {
-        margin: 0;
-        padding: 0;
-    }
+  /* Remove margin */
+  .row {
+    /*margin: 0;
+    padding: 0; */
+  }
 
-    /* Add some margin for multiple short text */
-    .form-group.row {
-        margin-bottom: 15px;
-    }
+  /* Add some margin for multiple short text */
+  .form-group.row {
+    margin-bottom: 15px;
+  }
 
-    /* Force table to not be like tables anymore */
-    .no-more-tables table,
-    .no-more-tables thead,
-    .no-more-tables tbody,
-    .no-more-tables th,
-    .no-more-tables td {
-        display: block;
-    }
+  /* Force table to not be like tables anymore */
+  .no-more-tables table,
+  .no-more-tables thead,
+  .no-more-tables tbody,
+  .no-more-tables th,
+  .no-more-tables td {
+    display: block;
+  }
 
-    .no-more-tables tr {
-        display: inline-block;
-        width: 100%;
-    }
-    .no-more-tables tbody {
-        padding: 0 1em 0 1em;
-    }
+  .no-more-tables tr {
+    display: inline-block;
+    width: 100%;
+  }
+  .no-more-tables tbody {
+    padding: 0 1em 0 1em;
+  }
 
-    /* Hide table headers display: none; no need for accessibility) */
-    .no-more-tables thead tr {
-        display:none;
-    }
+  /* Hide table headers display: none; no need for accessibility) */
+  .no-more-tables thead tr {
+    display:none;
+  }
 
-    .no-more-tables tr,
-    .array-by-columns-div .radio-list {
-        border: 1px solid #ccc;
-        padding: 1em;
-    }
+  .no-more-tables tr,
+  .array-by-columns-div .radio-list {
+    border: 1px solid #ccc;
+    padding: 1em;
+  }
 
-    /* Line header ; color is h4 color */
-    .no-more-tables tr th,
-    .array-by-columns-div .answertext {
-        font-size: 1.1em;
-        text-align: center;
-        color: #317eac;
-    }
+  /* Line header ; color is h4 color */
+  .no-more-tables tr th,
+  .array-by-columns-div .answertext {
+    font-size: 1.1em;
+    text-align: center;
+    color: #317eac;
+  }
 
-    .no-more-tables tr th {
-        text-align: left;
-    }
+  .no-more-tables tr th {
+    text-align: left;
+  }
 
-    .array-by-columns-div .answertext {
-        padding: 8px;
-        padding-left: 0;
-        text-align: left;
-        font-weight: bold;
-    }
+  .array-by-columns-div .answertext {
+    padding: 8px;
+    padding-left: 0;
+    text-align: left;
+    font-weight: bold;
+  }
 
-    .array-by-columns-div .radio-item {
-        padding-bottom: 8px;
-    }
+  .array-by-columns-div .radio-item {
+    padding-bottom: 8px;
+  }
 
-    .no-more-tables .checkbox  {
-        position: relative;
-        top: 6px;
-    }
+  .no-more-tables .checkbox  {
+    position: relative;
+    top: 6px;
+  }
 
-    .no-more-tables td {
-        /* Behave  like a "row" */
-        min-height: 2em;
-        border: none;
-        position: relative;
-        /*padding-left: 95%;*/
-        padding-bottom: 1em;
-        white-space: normal;
-        text-align:left;
-    }
+  .no-more-tables td {
+    /* Behave  like a "row" */
+    min-height: 2em;
+    border: none;
+    position: relative;
+    /*padding-left: 95%;*/
+    padding-bottom: 1em;
+    white-space: normal;
+    text-align:left;
+  }
 
-    .array-multi-flexi  .no-more-tables td, .no-more-tables-array-dual-dropdown-layout  td, .no-more-tables-array-multi-text td{
-        padding-left: 0%;
-    }
+  .array-multi-flexi  .no-more-tables td, .no-more-tables-array-dual-dropdown-layout  td, .no-more-tables-array-multi-text td{
+    padding-left: 0%;
+  }
 
 
-    .no-more-tables td:before {
-        /* Now like a table header */
-        position: absolute;
-        /* Top/left values mimic padding */
-        top: 6px;
-        left: 6px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        text-align:left;
-        font-weight: bold;
-    }
+  .no-more-tables td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align:left;
+    font-weight: bold;
+  }
 
-    /*
-    Label the data
-    */
-    /*.no-more-tables td:before { content: attr(data-title); }*/
+  /*
+  Label the data
+  */
+  /*.no-more-tables td:before { content: attr(data-title); }*/
 
-    .no-more-tables-10-point td {
-    }
+  .no-more-tables-10-point td {
+  }
 
-    /* Don't wrap "No answer" on two lines */
-    .no-more-tables-10-point label {
-        white-space: nowrap;
-    }
+  /* Don't wrap "No answer" on two lines */
+  .no-more-tables-10-point label {
+    white-space: nowrap;
+  }
 
-    .no-more-tables-10-point td:before, .no-more-tables-5-point td:before {
-        /* Now like a table header */
-        position: relative;
-        left: 2px;
-        /* Top/left values mimic padding */
-    }
+  .no-more-tables-10-point td:before, .no-more-tables-5-point td:before {
+    /* Now like a table header */
+    position: relative;
+    left: 2px;
+    /* Top/left values mimic padding */
+  }
 
-    /* When tables are collapsed, remove margin top so the labels look centered */
-    input[type="radio"],
-    .radio input[type="radio"],
-    .radio-inline input[type="radio"] {
-      margin-top: 4px;
-    }
+  /* When tables are collapsed, remove margin top so the labels look centered */
+  input[type="radio"],
+  .radio input[type="radio"],
+  .radio-inline input[type="radio"] {
+    margin-top: 4px;
+  }
 
-    .five-point-choice .col-xs-12 {
-        padding-bottom: 8px;  /* For 5-point-choice; TODO: Should look like 5-point-array? */
-    }
+  .five-point-choice .col-xs-12 {
+    padding-bottom: 8px;  /* For 5-point-choice; TODO: Should look like 5-point-array? */
+  }
 
-    /* Hide the first column in array-by-column */
-    .array-by-columns-table tr > *:nth-child(1) {
-        display: none;
-    }
+  /* Hide the first column in array-by-column */
+  .array-by-columns-table tr > *:nth-child(1) {
+    display: none;
+  }
 
-    /* Need some more space on phone */
-    .array-multi-flexi .answertext {
-        padding-bottom: 0.5em;
-    }
+  /* Need some more space on phone */
+  .array-multi-flexi .answertext {
+    padding-bottom: 0.5em;
+  }
 
-    .array-multi-flexi .answer-item label {
-        padding-bottom: 0.5em;
-    }
+  .array-multi-flexi .answer-item label {
+    padding-bottom: 0.5em;
+  }
 
-    /* On phone, left and right slider text is above and below slider */
-    .slider-left-span {
-        text-align: left;
-    }
+  /* On phone, left and right slider text is above and below slider */
+  .slider-left-span {
+    text-align: left;
+  }
 
-    /* As above, collapse prefix/suffix to above/below input */
-    .prefix-text-right {
-        text-align: left;
-    }
+  /* As above, collapse prefix/suffix to above/below input */
+  .prefix-text-right {
+    text-align: left;
+  }
 
-    table.question.subquestion-list.questions-list tr th.answertext {
-        text-align: left;
-    }
+  table.question.subquestion-list.questions-list tr th.answertext {
+    text-align: left;
+  }
 
-    /* Used for date-picker icon within input */
-    .form-control-feedback {
-        right: 0.5em;
-    }
+  /* Used for date-picker icon within input */
+  .form-control-feedback {
+    right: 0.5em;
+  }
 
-    /* Increase-same-decrease array */
-    .row-inc-same-dec .radio-item,
-    .thead-inc-same-dec th {
-        text-align: left;
-    }
+  /* Increase-same-decrease array */
+  .row-inc-same-dec .radio-item,
+  .thead-inc-same-dec th {
+    text-align: left;
+  }
 
-    .table-multi-num.no-more-tables tr {
-        border: none;
-    }
+  .table-multi-num.no-more-tables tr {
+    border: none;
+  }
 
-    /* Used for <td></td> in multiple-numeric */
-    td.hide-on-small-screen {
-        display: none;
-    }
+  /* Used for <td></td> in multiple-numeric */
+  td.hide-on-small-screen {
+    display: none;
+  }
 
-    #langchanger-label {
-        padding-top: 11px;
-    }
+  #langchanger-label {
+    padding-top: 11px;
+  }
 
-    .col-xs-12.question-container {
-        padding-right: 0;
-        padding-left: 0;
-    }
-
+  .col-xs-12.question-container {
+    padding-right: 0;
+    padding-left: 0;
+  }
 }
 
 /** On small phones, leave some more space */
 @media only screen and (max-width: 400px) {
 
-    .array-by-columns-div .radio-list {
-        border: 1px solid #ccc;
-        padding: 1em;
-        margin: 1em;
-    }
+  .array-by-columns-div .radio-list {
+    border: 1px solid #ccc;
+    padding: 1em;
+    margin: 1em;
+  }
 
-    /*
-    .col-sm-12.answer {
-        padding-left: 0;
-        padding-right: 0;
-    }
-    */
+  /*
+  .col-sm-12.answer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  */
 
-    .no-more-tables tbody {
-        padding-left: 0;
-        padding-right: 0;
-    }
+  .no-more-tables tbody {
+    padding-left: 0;
+    padding-right: 0;
+  }
 
-    /* For yes-no question, shrink the buttons a bit on phone screens */
-    .btn-lg, .btn-group-lg label {
-        padding: 10px 15px;
-    }
+  /* For yes-no question, shrink the buttons a bit on phone screens */
+  .btn-lg, .btn-group-lg label {
+    padding: 10px 15px;
+  }
 
-    .slider.slider-horizontal {
-        /* Slider can be full width on phones */
-        width: 100%;
-    }
+  .slider.slider-horizontal {
+    /* Slider can be full width on phones */
+    width: 100%;
+  }
 
-    /* Center label under radio button on phones */
-    .five-point-choice label {
-        margin-left: 5px;
-    }
+  /* Center label under radio button on phones */
+  .five-point-choice label {
+    margin-left: 5px;
+  }
 
-    /* Make file-upload pop-up shorter on phones */
-    .file-upload-modal-body {
-        padding: 0;
-        height: 300px;
-    }
+  /* Make file-upload pop-up shorter on phones */
+  .file-upload-modal-body {
+    padding: 0;
+    height: 300px;
+  }
 
-    /* Modal should be in front of navbar, so the close icon is visible */
-    .modal {
-        z-index: 3000;
-    }
+  /* Modal should be in front of navbar, so the close icon is visible */
+  .modal {
+    z-index: 3000;
+  }
 
-    /* Less margin on phones */
-    .slider.slider-horizontal {
-        margin-bottom: 0.4em;
-    }
-
+  /* Less margin on phones */
+  .slider.slider-horizontal {
+    margin-bottom: 0.4em;
+  }
 }
 
 /* On iPad etc only */
 @media only screen and (max-width: 800px) and (min-width: 768px) {
-    .five-point-choice .noanswer-item {
-        padding: 0;
-    }
+  .five-point-choice .noanswer-item {
+    padding: 0;
+  }
 }
 
 
@@ -755,8 +750,7 @@ table > tbody > tr > td.ddprefix {
  * Display adjust, question type by question type
  */
 
-.radio input[type="radio"]:disabled + label
-{
+.radio input[type="radio"]:disabled + label {
     opacity: 0.25;
 }
 
@@ -766,138 +760,132 @@ table > tbody > tr > td.ddprefix {
 */
 
 /* center the radio list in the td*/
-td.answer-item.text-center
-{
-    padding-left: 39px;
+td.answer-item.text-center {
+  padding-left: 39px;
 }
 
-table.array-no-dropdown  td.answer-item.text-center
-{
-    padding-left: 45px;
+table.array-no-dropdown  td.answer-item.text-center {
+  padding-left: 45px;
 }
 
-.table-5-point-array td.answer-item.text-center
-{
-    padding-left: 54px;
+.table-5-point-array td.answer-item.text-center {
+  padding-left: 54px;
 }
 
-.table-10-point-array  td.answer-item.text-center
-{
-    padding-left: 40px;
+.table-10-point-array  td.answer-item.text-center {
+  padding-left: 40px;
 }
 
-.table-10-point-array  thead tr th.text-center
-{
-    padding-left: 0px;
+.table-10-point-array  thead tr th.text-center {
+  padding-left: 0px;
 }
 
 
 /* center the label text in no more table mode */
 .label-text{
-    margin-top: -24px;
-    margin-left: 20px;
+  margin-top: -24px;
+  margin-left: 20px;
 }
 
 /* ...except for dual-scale and array-by-column */
 .table-dual-scale .label-text, .array-by-columns-div .label-text {
-    margin-top: 0px;
-    margin-left: 0px;
+  margin-top: 0px;
+  margin-left: 0px;
 }
 
 .label-clickable:hover
 {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .table > tbody > tr > th
 {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 table.numbers-only th, table.numbers-only input {
-    text-align: right;
+  text-align: right;
 }
 
 .othertext-label-checkox-container {
-    padding-top: 5px;
-    margin-right: 5px;
+  padding-top: 5px;
+  margin-right: 5px;
 }
 
 .multiple-choice-with-comment.table, .table-multi-num.table{
-    table-layout: auto;
-    width: initial;
+  table-layout: auto;
+  width: initial;
 }
  .multiple-choice-with-comment.table > tbody > tr > td {
-     padding-left: 18px;
-     vertical-align: middle;
+   padding-left: 18px;
+   vertical-align: middle;
  }
 
  /* alignment for small screens*/
  .multiple-choice-with-comment.table > tbody > tr > td.comment-container {
-     padding-left: 14px;
+   padding-left: 14px;
  }
 .checkbox input[type="checkbox"] {
-    position: static;
-    margin-left: 0px;
+  position: static;
+  margin-left: 0px;
 }
 
 .short-free-text .prefix, .short-free-text .suffix,.geoloc-item .search-icon, .geoloc-item .checkbox  {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 .geoname_search {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
-
-
-
 
 /** Question Design **/
 
 body div.row .question-container {
-    margin-bottom: 2em;
+  margin-bottom: 2em;
 }
 
-.answer-container, .question-help-container
-{
-    border-style: solid;
+.answer-wrapper{
+  border-top:none;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
 
-.answer-container
-{
-    border-width: 0px 1px 0px 1px;
-    padding-top: 3em;
-    background-color: white;
+.answer-container, 
+.question-help-container {
+    
 }
 
-.question-help-container
-{
-    border-width: 0px 1px 1px 1px;
-    padding-bottom: 5px;
+.answer-container {
+  padding-top: 1em;
+  background-color: white;
 }
 
+.question-help-container {
+  
+}
 
 /** Header **/
 
 .question-title-container {
-    color: white;
-    padding: 2em 1em 1em 1em;
-
+  color: white;
+  padding: 1em;
 }
 
-.questionvalidcontainer {
-    position: relative;
-    text-align: center;
-    padding-bottom: 1em;
+.question-valid-container {
+  position: relative;
+  text-align: center;
 }
 
-.questionvalidcontainer .text-danger{
-    font-weight: bold;
+.question-valid-container .text-danger{
+  font-weight: bold;
+  padding: 5px 0;
 }
 
-.questionvalidcontainer .text-info{
-    color: #B9CC14;
-    font-weight: bold;
+.question-valid-container .text-info{
+  color: #B9CC14;
+  font-weight: bold;
+  padding: 5px 0;
 }
 
 /* Arrow */
@@ -919,57 +907,57 @@ body div.row .question-container {
 
 /* Asterix */
 .asterisk {
-    display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .asterisk:before {
-    content: "\f069";
+  content: "\f069";
 }
 
 
 /* Check javascript */
 #checkjavascript {
-    margin-top: 100px;
+  margin-top: 100px;
 }
 
 /*label font weight*/
 label, th {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 #surveys-list-container
 {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 /* text overflows, ellipsis and hyphens */
 .navbar-brand {
-    overflow: hidden;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #outerframeContainer {
-    min-height: 100%;
-    word-wrap: break-word;
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-    -ms-hyphens: auto;
-    -o-hyphens: auto;
-    hyphens: auto;
+  min-height: 100%;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  -o-hyphens: auto;
+  hyphens: auto;
 }
 
 .xdebug-var-dump {
-    z-index: 10000;
-    position: relative;
-    top: 10px;
+  z-index: 10000;
+  position: relative;
+  top: 10px;
 }
 
 .list-unstyled.radio-list {
-    padding-left: 15px;
+  padding-left: 15px;
 }
 
 div.yes-no .btn-group label {
@@ -978,5 +966,5 @@ div.yes-no .btn-group label {
 
 
 .multipleco-other-topic {
-    max-width: 150px;
+  max-width: 150px;
 }
