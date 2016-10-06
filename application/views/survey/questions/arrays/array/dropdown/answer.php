@@ -12,14 +12,19 @@
 <!-- Array -->
 
 <!-- answer -->
-<div class="no-more-tables no-more-tables-array-dropdown">
-    <table class="table table-condensed question subquestion-list questions-list  <?php echo $extraclass; ?>">
-        <tbody>
-            <?php
-                // rows/answer_row.php
-                echo $sRows;
-            ?>
-        </tbody>
-    </table>
-</div>
+<table class="table question subquestion-list questions-list  <?php echo $extraclass; ?>">
+    <colgroup class="col-responses">
+        <col class="col-answers" style='width: <?php echo $answerwidth; ?>%;' />
+        <col class="odd" style='width: <?php echo $columnswidth; ?>%;' />
+        <?php if($right_exists): ?>
+            <col class="col-answersright" style='width: <?php echo $answerwidth; ?>%;' />
+        <?php endif; ?>
+    </colgroup>
+    <tbody>
+        <?php
+            // rows/answer_row.php
+            echo $sRows;
+        ?>
+    </tbody>
+</table>
 <!-- end of answer -->

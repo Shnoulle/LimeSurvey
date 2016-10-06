@@ -1810,7 +1810,6 @@ function createFieldMap($surveyid, $style='short', $force_refresh=false, $questi
         $fieldmap["startlanguage"]['group_name']="";
     }
 
-    /*
     $fieldmap['seed'] = array('fieldname' => 'seed', 'sid' => $surveyid, 'type' => 'seed', 'gid' => '', 'qid' => '', 'aid' => '');
     if ($style == 'full')
     {
@@ -1818,7 +1817,6 @@ function createFieldMap($surveyid, $style='short', $force_refresh=false, $questi
         $fieldmap["seed"]['question']=gT("Seed");
         $fieldmap["seed"]['group_name']="";
     }
-    */
 
     //Check for any additional fields for this survey and create necessary fields (token and datestamp and ipaddr)
     $prow = Survey::model()->findByPk($surveyid)->getAttributes(); //Checked
@@ -2606,6 +2604,23 @@ function HTMLEscape($str) {
 function dbQuoteAll($value)
 {
     return Yii::app()->db->quoteValue($value);
+}
+
+
+/**
+* This function strips UTF-8 control characters from strings, except tabs, CR and LF
+* - it is intended to be used before any response data is saved to the response table
+*
+* @param mixed $sValue A string to be sanitized
+* @return A sanitized string, otherwise the unmodified original variable
+*/
+function stripCtrlChars($sValue)
+{
+    if (is_string($sValue))
+    {
+        $sValue=preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x9F]/u', '', $sValue);
+    }
+    return $sValue;
 }
 
 // make a string safe to include in a JavaScript String parameter.
@@ -3458,15 +3473,15 @@ function translateLinks($sType, $iOldSurveyID, $iNewSurveyID, $sString)
 {
     if ($sType == 'survey')
     {
-        $sPattern = "([^'\"]*)/upload/surveys/{$iOldSurveyID}/";
+        $sPattern = '(http(s)?:\/\/)?(([a-z0-9\/\.])*(?=(\/upload))\/upload\/surveys\/'.$iOldSurveyID.'\/)';
         $sReplace = Yii::app()->getConfig("publicurl")."upload/surveys/{$iNewSurveyID}/";
-        return preg_replace('#'.$sPattern.'#', $sReplace, $sString);
+        return preg_replace('/'.$sPattern.'/u', $sReplace, $sString);
     }
     elseif ($sType == 'label')
     {
-        $pattern = "([^'\"]*)/upload/labels/{$iOldSurveyID}/";
-        $replace = Yii::app()->getConfig("publicurl")."upload/labels/{$iNewSurveyID}/";
-        return preg_replace('#'.$pattern.'#', $replace, $sString);
+        $sPattern = '(http(s)?:\/\/)?(([a-z0-9\/\.])*(?=(\/upload))\/upload\/labels\/'.$iOldSurveyID.'\/)';
+        $sReplace = Yii::app()->getConfig("publicurl")."upload/labels/{$iNewSurveyID}/";
+        return preg_replace("/".$sPattern."/u", $sReplace, $sString);
     }
     else // unknown type
     {
@@ -5602,15 +5617,20 @@ function getHeader($meta = false)
         $languagecode = Yii::app()->getConfig('defaultlang');
     }
     App()->getClientScript()->registerPackage('fontawesome');
-    $header=  "<!DOCTYPE html>\n"
-    . "<html lang=\"{$languagecode}\"";
+    $header = "<!DOCTYPE html>\n";
+    $class = "no-js $languagecode";
+    $header .= "<html lang=\"{$languagecode}\"";
 
-    if (getLanguageRTL($languagecode))
-    {
+    if (getLanguageRTL($languagecode)){
         $header.=" dir=\"rtl\" ";
+        $class .= " dir-rtl";
+    }else{
+        $header.=" dir=\"ltr\" ";
+        $class .= " dir-ltr";
     }
-    $header.= ">\n\t<head>\n";
-
+    $header.= " class=\"{$class}\">\n";
+    $header.= "\t<head>\n";
+    $header.= "<script type='text/javascript'>/*<![CDATA[*/(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement);/*]]>*/</script>";
     if ($meta)
         $header .= $meta;
 

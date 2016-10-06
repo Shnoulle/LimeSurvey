@@ -1,46 +1,131 @@
 /**
  * All of this part fix already included css (bootstrap + awesome) for this template
  */
-/* Boostrap don't do some reset */
-img,video,svg{
+/* Boostrap don't do some reset : do it in answer part*/
+.answers-wrapper img,.answers-wrapper video,.answers-wrapper svg{
   max-width: 100%;height: auto;
 }
+/* awesome-bootstrap-checkbox */
+li.radio-item,li.checkbox-item{display:block}
+/* Else big label break*/
+.radio-item label,.checkbox-item label {display:block}
+.radio-item input[type="radio"],.checkbox-item input[type="checkbox"] {
+    position:absolute;
+}
 /**
- * Table alignment
+ * Table .question feature
  */
-.table.question,.table.question th,.table.question td
-{text-align:center;vertical-align:middle}
-.table.question thead th
-{vertical-align:bottom}
+/* We have some settings to set width of the table : use it */
+.table.question{table-layout:fixed}
+.table.question{width:100%}
+/* Basic alignment */
+.question > tbody > tr > td
+{vertical-align:middle}
+.question tbody td
+{text-align:center}
+.question tbody th
+{text-align:right;vertical-align:middle}
+.question thead th
+{text-align:center;vertical-align:bottom}
 
-table.question .answertext{text-align:right}
-table.question .answertextright{text-align:left}
+.question tbody .answertext{text-align:right}
+.question .answertextright{text-align:left}
 
-
-
-/* For awesome : we need sr-only inside table */
-.radio-item label.sr-only{
-overflow:visible;
-width:17px;
-height:17px;
-color: transparent;
-margin-right:-17px;
-}
-.radio-item label.sr-only > * {
-    border: 0 none;
-    clip: rect(0px, 0px, 0px, 0px);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-}
+/**
+ *  awesome-bootstrap-checkbox inside table with an sr-only label
+ */
+/* reset the margin and review the padding set by boostrap */
 table.question input[type="checkbox"],table.question input[type="radio"]{
 margin: 0;
 }
-/* no-more-table system */
+.table td.radio-item,.table td.checkbox-item{
+    padding: 2px;
+    padding-left: 22px;
+}
+/* show partially sr-only inside table */
+.radio-item label.ls-label-xs-visibility,.checkbox-item label.ls-label-xs-visibility{
+    display:inline-block;
+    position:relative;
+    left:auto;
+    overflow:hidden;
+    width: 17px;
+    height: 17px;
+    margin-left:-20px;
+    line-height: 21px;
+    text-indent: 21px;
+}
+/* no argin on label : no margiun after and before too */
+.radio-item label.ls-label-xs-visibility::before,.checkbox-item label.ls-label-xs-visibility::before{
+    margin-left:0;
+}
+.radio-item label.ls-label-xs-visibility::after,.checkbox-item label.ls-label-xs-visibility::after {
+    margin-left:0;
+}
+.checkbox-item label.ls-label-xs-visibility::after {
+    line-height:17px;width:17px;text-align:center;text-indent: 0;
+}
+/* Hide the other content inside sr-only */
+.radio-item label.ls-label-xs-visibility > * ,.checkbox-item label.ls-label-xs-visibility > *{
+    position:absolute;
+    left:-10000px;
+    top:auto;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+}
+/*
+Max width before this PARTICULAR table gets nasty
+For iPads specifically : add this : (min-device-width: 768px) and (max-device-width: 1024px)
+*/
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+    table.question,.question thead,.question tbody,.question th,.question td,.question tr {
+        display: block;
+        text-align:left;
+    }
+    .question thead{display:none} /* We don't need it for accessibility : we already have the label */
 
-table.no-more-tables{
+    .question tbody td{text-align:left;}
 
+    .question > tbody > tr > td.radio-item{padding:4px;padding-left: 24px;}
+    .question tbody .answertext{text-align:left}
+    .question .answertextright{text-align:right}
+    /* Show the label */
+    label.ls-label-xs-visibility
+    {
+        display:block;
+        position:relative;
+        left:auto;
+        width: auto;
+        height: auto;
+    }
+    .radio-item label.ls-label-xs-visibility,.checkbox-item label.ls-label-xs-visibility{
+        display:block;
+        left:auto;
+        overflow:visible;
+        width: auto;
+        height: auto;
+        margin-left:0;
+        line-height: initial;
+        text-indent: initial;
+    }
+    .question label.ls-label-xs-visibility > *
+    {
+        position:relative;
+        left:auto;
+        top:auto;
+        width:auto;
+        height:auto;
+        overflow:auto;
+    }
+    .question .radio-item label.ls-label-xs-visibility::before,.question .checkbox-item label.ls-label-xs-visibility::before {
+        margin-left:-20px;
+    }
+    .question .radio-item label.ls-label-xs-visibility::after,.question .checkbox-item label.ls-label-xs-visibility::after {
+        margin-left:-20px;
+    }
+
+    /* bs fix */
+    .question td.visible-xs,.question th.visible-xs{display:block !important}
 }

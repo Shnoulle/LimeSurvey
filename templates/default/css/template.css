@@ -134,84 +134,6 @@ li.responsive-content
 }
 
 /** UI Slider **/
-.numeric-multi label.slider-label {
-  display: table-cell;
-  width: auto !important;
-  padding: 0 1em 0.2em 0;
-  margin-top: 1.3em;
-  vertical-align: middle;
-}
-
-.numeric-multi .ui-slider-handle {
-    top: -0.35em;
-}
-
-.ui-slider-1 {
-  width: 200px;
-  height: 9px;
-  margin-bottom: 20px;
-}
-
-.ui-slider-2 {
-  width: 200px;
-  height: 23px;
-  position: relative;
-  background-image: url(../../images/slider-bg-2.png);
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-.slider_callout {
-  height: 20px;
-  width: 100px;
-  overflow: hidden;
-  position: absolute;
-  top: -20px;
-  margin-left: -3px;
-  color: #284a6e;
-  font-size: 90%;
-  font-weight: bold;
-  text-align: left;
-}
-
-.slider_showmin {
-  float: left;
-  width: 50px;
-  margin: 15px 0 0 -0.3em;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 0.7em;
-  font-weight: normal;
-  text-align: left;
-}
-
-.slider_showmax {
-  float: right;
-  width: 50px;
-  margin: 15px -0.3em 0 0;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 0.7em;
-  font-weight: normal;
-  text-align: right;
-}
-
-.slider_lefttext {
-  display: table-cell;
-  padding-top: 1.5em;
-  padding-right: 11px;
-  padding-bottom: 3px;
-  vertical-align: top;
-  text-align: right;
-  font-size: 0.9em;
-}
-
-.slider_righttext {
-  display: table-cell;
-  padding-top: 1.5em;
-  padding-left: 11px;
-  padding-bottom: 3px;
-  vertical-align: top;
-  font-size: 0.9em;
-}
 
 .withslider {
     margin-bottom: 30px;
@@ -389,25 +311,6 @@ table {
     margin-bottom: 1em;
 }
 
-/* When slider has both show-min-max and reset button, add space between
- * left badge and reset button */
-.slider-min-badge {
-    margin-right: 1em;
-}
-
-.slider-left-span {
-    text-align: right;
-}
-
-.slider-right-span {
-    text-align: left;
-}
-
-.slider-container {
-    margin-top: 3.5em;
-    margin-bottom: 2.5em;
-}
-
 #yii-flash-message {
     margin-top: 3em;
 }
@@ -465,6 +368,7 @@ table > tbody > tr > td.ddprefix {
 */
 
 /* center the radio list in the td*/
+/*
 td.answer-item.text-center
 {
     padding-left: 39px;
@@ -489,6 +393,7 @@ table.array-no-dropdown  td.answer-item.text-center
 {
     padding-left: 0px;
 }
+*/
 
 /**
  * On big screen only, iPad and up
@@ -514,8 +419,21 @@ table.array-no-dropdown  td.answer-item.text-center
  * (Both in portrait mode.)
  * We don't have to collapse tables on pads.
  */
-@media only screen and (max-width: 801px) {
-
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+    table.question  tbody {
+        padding: 0 1em 0 1em;
+    }
+    table.question  tr{
+        border: 0 none;
+        padding: 1em;
+    }
+    table.question  tr th {
+        font-size: 1.1em;
+        text-align: center;
+        color: #317eac;
+    }
     /*
         No more table transformation applies when screen is under 801px (for a few exotic tablet screens, see #11016),
         whereas visible-xs-block respect bootstrap standards (767px)
@@ -534,68 +452,43 @@ table.array-no-dropdown  td.answer-item.text-center
         margin-bottom: 15px;
     }
 
-    /* Force table to not be like tables anymore */
-    .no-more-tables table,
-    .no-more-tables thead,
-    .no-more-tables tbody,
-    .no-more-tables th,
-    .no-more-tables td {
-        display: block;
-    }
-
-    .no-more-tables tbody th,
-    .no-more-tables tbody td,
-    .no-more-tables tbody tr {
-        width: 100% !important;
-    }
-
-    .no-more-tables tr {
-        display: inline-block;
-    }
-    .no-more-tables tbody {
+    table.question  tbody {
         padding: 0 1em 0 1em;
     }
 
     /* Hide table headers display: none; no need for accessibility) */
-    .no-more-tables thead tr {
+    table.question  thead tr {
         display:none;
     }
 
-    .no-more-tables tr,
-    .array-by-columns-div .radio-list {
+    table.question tr{
         border: 1px solid #ccc;
         padding: 1em;
     }
 
     /* Line header ; color is h4 color */
-    .no-more-tables tr th,
-    .array-by-columns-div .answertext {
+    table.question tr th {
         font-size: 1.1em;
         text-align: center;
         color: #317eac;
     }
 
-    .no-more-tables tr th {
+    table.question tr th {
         text-align: left;
     }
 
-    .array-by-columns-div .answertext {
+    .array-by-columns .answertext {
         padding: 8px;
         padding-left: 0;
         text-align: left;
         font-weight: bold;
     }
 
-    .array-by-columns-div .radio-item {
+    .array-by-columns .radio-item {
         padding-bottom: 8px;
     }
 
-    .no-more-tables .checkbox  {
-        position: relative;
-        top: 6px;
-    }
-
-    .no-more-tables td {
+    table.question td {
         /* Behave  like a "row" */
         min-height: 2em;
         border: none;
@@ -610,46 +503,6 @@ table.array-no-dropdown  td.answer-item.text-center
         padding-left:1.5em;
     }
 
-
-    .no-more-tables td:before {
-        /* Now like a table header */
-        position: absolute;
-        /* Top/left values mimic padding */
-        top: 6px;
-        left: 6px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        text-align:left;
-        font-weight: bold;
-    }
-
-    /*
-    Label the data
-    */
-    /*.no-more-tables td:before { content: attr(data-title); }*/
-
-    .no-more-tables-10-point td {
-    }
-
-    /* Don't wrap "No answer" on two lines */
-    .no-more-tables-10-point label {
-        white-space: nowrap;
-    }
-
-    .no-more-tables-10-point td:before, .no-more-tables-5-point td:before {
-        /* Now like a table header */
-        position: relative;
-        left: 2px;
-        /* Top/left values mimic padding */
-    }
-
-    /* When tables are collapsed, remove margin top so the labels look centered */
-    input[type="radio"],
-    .radio input[type="radio"],
-    .radio-inline input[type="radio"] {
-      margin-top: 4px;
-    }
 
     .five-point-choice .col-xs-12 {
         padding-bottom: 8px;  /* For 5-point-choice; TODO: Should look like 5-point-array? */

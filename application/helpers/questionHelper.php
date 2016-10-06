@@ -1,9 +1,9 @@
 <?php
 /**
 * LimeSurvey
-* Copyright (C) 2007-2013 The LimeSurvey Project Team / Carsten Schmitz
+* Copyright (C) 2007-2016 The LimeSurvey Project Team / Carsten Schmitz
 * All rights reserved.
-* License: GNU/GPL License v2 or later, see LICENSE.php
+* License: GNU/GPL License v3 or later, see LICENSE.php
 * LimeSurvey is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
@@ -14,7 +14,7 @@
 namespace ls\helpers;
 
 /**
- * General helper class for generating views.
+ * General helper class for question + question setting system
  */
 class questionHelper
 {
@@ -69,6 +69,16 @@ class questionHelper
         'max'=>'100',
         "help"=>gT('Set the percentage width of the (sub-)question column (1-100)'),
         "caption"=>gT('(Sub-)question width'));
+
+        self::$attributes["answer_width_bycolumn"]=array(
+        "types"=>"H",
+        'category'=>gT('Display'),
+        'sortorder'=>100,
+        'inputtype'=>'integer',
+        'min'=>'1',
+        'max'=>'100',
+        "help"=>gT('Set the percentage width of the answers column (1-100)'),
+        "caption"=>gT('Answers column width'));
 
         self::$attributes["repeat_headings"]=array(
         "types"=>"F:1;",
@@ -270,6 +280,7 @@ class questionHelper
         'category'=>gT('Logic'),
         'sortorder'=>210,
         'inputtype'=>'textarea',
+        'i18n'=>true,
         "help"=>gT('This is a hint text that will be shown to the participant describing the question validation equation.'),
         "caption"=>gT('Question validation tip'));
 
@@ -286,6 +297,7 @@ class questionHelper
         'category'=>gT('Logic'),
         'sortorder'=>230,
         'inputtype'=>'textarea',
+        'i18n'=>true,
         "help"=>gT('This is a tip shown to the participant describing the sub-question validation equation.'),
         "caption"=>gT('Sub-question validation tip'));
 

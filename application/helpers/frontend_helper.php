@@ -477,7 +477,7 @@ function submittokens($quotaexit=false)
     $today = dateShift(date("Y-m-d H:i:s"), "Y-m-d H:i", Yii::app()->getConfig("timeadjust"));
 
     // check how many uses the token has left
-    $token = Token::model($surveyid)->findByAttributes(array('token' => $clienttoken));
+    $token = Token::model($surveyid,'FinalSubmit')->findByAttributes(array('token' => $clienttoken));
 
     if ($quotaexit==true)
     {
@@ -1000,10 +1000,25 @@ function buildsurveysession($surveyid,$preview=false)
     $FlashError = "";
 
     // Scenario => Captcha required
-   if($scenarios['captchaRequired'] && !$preview)
-    {
-        list($renderCaptcha, $FlashError) = testCaptcha($aEnterTokenData, $subscenarios, $surveyid, $loadsecurity);
+    if($scenarios['captchaRequired'] && !$preview) {
+        $FlashError = '';
+
+        //Apply the captchaEnabled flag to the partial
+        $aEnterTokenData['bCaptchaEnabled'] = true;
+        // IF CAPTCHA ANSWER IS NOT CORRECT OR NOT SET
+        if (!$subscenarios['captchaCorrect']) {
+            if ($loadsecurity) {
+                // was a bad answer
+                $FlashError.=gT("Your answer to the security question was not correct - please try again.")."<br/>\n";
+            }
+            $renderCaptcha='main';
+        }
+        else {
+            $_SESSION['survey_'.$surveyid]['captcha_surveyaccessscreen']=true;
+            $renderCaptcha='correct';
+        }
     }
+
     // Scenario => Token required
     if ($scenarios['tokenRequired'] && !$preview){
         //Test if token is valid
@@ -1082,27 +1097,7 @@ function buildsurveysession($surveyid,$preview=false)
     $qtypes=getQuestionTypeList('','array');
     $fieldmap=createFieldMap($surveyid,'full',true,false,$_SESSION['survey_'.$surveyid]['s_lang']);
 
-    //$seed = ls\mersenne\getSeed($surveyid, $preview);
-
-    // Randomization groups for groups
-    list($fieldmap, $randomized1) = randomizationGroup($surveyid, $fieldmap, $preview);
-
-    // Randomization groups for questions
-    list($fieldmap, $randomized2) = randomizationQuestion($surveyid, $fieldmap, $preview);
-
-    $randomized = $randomized1 || $randomized2;;
-
-    if ($randomized === true)
-    {
-        $fieldmap = finalizeRandomization($fieldmap);
-
-        $_SESSION['survey_'.$surveyid]['fieldmap-' . $surveyid . $_SESSION['survey_'.$surveyid]['s_lang']] = $fieldmap;
-        $_SESSION['survey_'.$surveyid]['fieldmap-' . $surveyid . '-randMaster'] = 'fieldmap-' . $surveyid . $_SESSION['survey_'.$surveyid]['s_lang'];
-    }
-
-    // TMSW Condition->Relevance:  don't need hasconditions, or usedinconditions
-
-    $_SESSION['survey_'.$surveyid]['fieldmap']=$fieldmap;
+    $_SESSION['survey_'.$surveyid]['fieldmap'] = $fieldmap;
 
     initFieldArray($surveyid, $fieldmap);
 
@@ -1115,7 +1110,7 @@ function buildsurveysession($surveyid,$preview=false)
     checkPassthruLabel($surveyid, $preview, $fieldmap);
 
     Yii::trace('end', 'survey.buildsurveysession');
-    //traceVar($_SESSION['survey_' . $surveyid]);
+
 }
 
 /**
@@ -1166,7 +1161,14 @@ function checkPassthruLabel($surveyid, $preview, $fieldmap)
 function prefillFromCommandLine($surveyid)
 {
     $reservedGetValues= array('token','sid','gid','qid','lang','newtest','action');
-    $startingValues=array();
+    if (!isset($_SESSION['survey_' . $surveyid]['startingValues']))
+    {
+        $startingValues=array();
+    }
+    else
+    {
+        $startingValues= $_SESSION['survey_' . $surveyid]['startingValues'];
+    }
     if (isset($_GET))
     {
         foreach ($_GET as $k=>$v)
@@ -1196,6 +1198,9 @@ function prefillFromCommandLine($surveyid)
  */
 function initFieldArray($surveyid, array $fieldmap)
 {
+    // Reset field array if called more than once (should not happen)
+    $_SESSION['survey_' . $surveyid]['fieldarray'] = array();
+
     foreach ($fieldmap as $key => $field)
     {
         if (isset($field['qid']) && $field['qid']!='')
@@ -1269,6 +1274,7 @@ function initFieldArray($surveyid, array $fieldmap)
  * @param array $subscenarios
  * @param int $surveyid
  * @param boolean $loadsecurity
+ * @todo This does not work for some reason, copied the code back. See bug #11739.
  * @return array ($renderCaptcha, $FlashError)
  */
 function testCaptcha(array $aEnterTokenData, array $subscenarios, $surveyid, $loadsecurity)
@@ -1292,6 +1298,43 @@ function testCaptcha(array $aEnterTokenData, array $subscenarios, $surveyid, $lo
     }
 
     return array ($renderCaptcha, $FlashError);
+}
+
+/**
+ * Apply randomizationGroup and randomizationQuestion to session fieldmap
+ * @param int $surveyid
+ * @param boolean $preview
+ * @return void
+ */
+function randomizationGroupsAndQuestions($surveyid, $preview = false, $fieldmap = array())
+{
+    // Initialize the randomizer. Seed will be stored in response.
+    ls\mersenne\setSeed($surveyid);
+
+    if (empty($fieldmap))
+    {
+        $fieldmap = $_SESSION['survey_' . $surveyid]['fieldmap'];
+    }
+
+    // Randomization groups for groups
+    list($fieldmap, $randomized1) = randomizationGroup($surveyid, $fieldmap, $preview);
+
+    // Randomization groups for questions
+    list($fieldmap, $randomized2) = randomizationQuestion($surveyid, $fieldmap, $preview);
+
+    $randomized = $randomized1 || $randomized2;;
+
+    if ($randomized === true)
+    {
+        $fieldmap = finalizeRandomization($fieldmap);
+
+        $_SESSION['survey_'.$surveyid]['fieldmap-' . $surveyid . $_SESSION['survey_'.$surveyid]['s_lang']] = $fieldmap;
+        $_SESSION['survey_'.$surveyid]['fieldmap-' . $surveyid . '-randMaster'] = 'fieldmap-' . $surveyid . $_SESSION['survey_'.$surveyid]['s_lang'];
+    }
+
+    $_SESSION['survey_' . $surveyid]['fieldmap'] = $fieldmap;
+
+    return $fieldmap;
 }
 
 /**
@@ -1322,7 +1365,7 @@ function randomizationGroup($surveyid, array $fieldmap, $preview)
     foreach ($aRandomGroups as $sGroupName=>$aGIDs)
     {
         $aShuffledIDs=$aGIDs;
-        shuffle($aShuffledIDs);
+        $aShuffledIDs = ls\mersenne\shuffle($aShuffledIDs);
         $aGIDCompleteMap=$aGIDCompleteMap+array_combine($aGIDs,$aShuffledIDs);
     }
     $_SESSION['survey_' . $surveyid]['groupReMap'] = $aGIDCompleteMap;
@@ -1417,7 +1460,7 @@ function randomizationQuestion($surveyid, array $fieldmap, $preview)
             $oldQuestOrder[$key] = $randomGroups[$key];
             $newQuestOrder[$key] = $oldQuestOrder[$key];
             // We shuffle the question list to get a random key->qid which will be used to swap from the old key
-            shuffle($newQuestOrder[$key]);
+            $newQuestOrder[$key] = ls\mersenne\shuffle($newQuestOrder[$key]);
             $randGroupNames[] = $key;
         }
 

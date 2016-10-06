@@ -278,7 +278,7 @@ class index extends CAction {
             $redata = compact(array_keys(get_defined_vars()));
             $asMessage = array(
             gT("Error"),
-            gT("This survey is no longer available."),
+            gT("We are sorry but the survey is expired and no longer available."),
             sprintf(gT("Please contact %s ( %s ) for further assistance."),$thissurvey['adminname'],$thissurvey['adminemail'])
             );
 
@@ -334,7 +334,7 @@ class index extends CAction {
                 $sLoadSecurity=Yii::app()->request->getPost('loadsecurity');
                 $captcha = Yii::app()->getController()->createAction('captcha');
                 $captchaCorrect = $captcha->validate( $sLoadsecurity, false);
-            
+
                 if(empty($sLoadSecurity))
                 {
                     $errormsg .= gT("You did not answer to the security question.")."<br />\n";
@@ -354,6 +354,8 @@ class index extends CAction {
                 } else {
                     $errormsg .= gT("There is no matching saved survey");
                 }
+                randomizationGroupsAndQuestions($surveyid);
+                initFieldArray($surveyid, $_SESSION['survey_' . $surveyid]['fieldmap']);
             }
             if ($errormsg) {
                 Yii::app()->setConfig('move',"loadall");// Show loading form
@@ -580,6 +582,8 @@ class index extends CAction {
                             $_SESSION['survey_'.$surveyid]['maxstep'] = $_SESSION['survey_'.$surveyid]['totalsteps'];
                         }
                         loadanswers();
+                        randomizationGroupsAndQuestions($surveyid);
+                        initFieldArray($surveyid, $_SESSION['survey_' . $surveyid]['fieldmap']);
                     }
                 }
             }
@@ -599,6 +603,8 @@ class index extends CAction {
                 $thissurvey['format'] = 'S';
             }
             buildsurveysession($surveyid,true);
+            randomizationGroupsAndQuestions($surveyid, true);
+            initFieldArray($surveyid, $_SESSION['survey_' . $surveyid]['fieldmap']);
         }
 
         sendCacheHeaders();

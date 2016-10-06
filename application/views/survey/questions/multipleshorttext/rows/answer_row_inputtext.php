@@ -25,17 +25,25 @@
     </label>
 
     <div class="input-group col-xs-12 col-sm-<?php echo $sInputContainerWidth; ?>">
-        <?php echo $prefix; ?>
+        <?php if ($prefix != ''): ?>
+            <div class="ls-input-group-extra prefix-text prefix text-right">
+                <?php echo $prefix; ?>
+            </div>
+        <?php endif; ?>
         <input
             class="form-control <?php echo $kpclass; ?>"
             type="text"
             name="<?php echo $myfname; ?>"
             id="answer<?php echo $myfname; ?>"
             value="<?php echo $dispVal; ?>"
-            onkeyup="<?php echo $checkconditionFunction; ?>"
             <?php echo $maxlength; ?>
+            <?php if($numbersonly): echo "data-number='{$numbersonly}'"; endif; ?>
             />
-        <?php echo $suffix; ?>
-    </div>
+        <?php if ($suffix != ''): ?>
+            <div class="ls-input-group-extra suffix-text suffix text-right">
+                <?php echo $suffix; ?>
+            </div>
+        <?php endif; ?>
+        </div>
 </li>
 <!-- end of answer_row_inputtext -->
