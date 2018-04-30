@@ -22,6 +22,21 @@
 class AssetVersion extends LSActiveRecord
 {
     /**
+     * @var integer $id pk
+     */
+    public $id;
+
+    /**
+     * @var string $path
+     */
+    public $path = "";
+
+    /**
+     * @var integer $version
+     */
+    public $version = 0;
+
+    /**
      * @inheritdoc
      */
     public static function model($class = __CLASS__)
@@ -29,14 +44,6 @@ class AssetVersion extends LSActiveRecord
         return parent::model($class);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function init()
-    {
-        $this->path = "";
-        $this->version = 0;
-    }
     /** @inheritdoc */
     public function tableName()
     {
