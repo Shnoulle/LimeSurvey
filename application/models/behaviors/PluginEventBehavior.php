@@ -14,26 +14,22 @@
 
         public function afterDelete(CEvent $event)
         {
-            $this->dispatchPluginModelEvent('after'.get_class($this->owner).'Delete');
             $this->_dispatchDynamic('after','Delete');
             $this->dispatchPluginModelEvent('afterModelDelete');
         }
         public function afterSave(CEvent $event)
         {
-            $this->dispatchPluginModelEvent('after'.get_class($this->owner).'Save');
             $this->_dispatchDynamic('after','Save');
             $this->dispatchPluginModelEvent('afterModelSave');
         }
         public function beforeDelete(CModelEvent $event)
         {
-            $this->dispatchPluginModelEvent('before'.get_class($this->owner).'Delete');
             $this->_dispatchDynamic('before','Delete');
             $this->dispatchPluginModelEvent('beforeModelDelete');
         }
 
         public function beforeSave(CModelEvent $event)
         {
-            $this->dispatchPluginModelEvent('before'.get_class($this->owner).'Save');
             $this->_dispatchDynamic('before','Save');
             $this->dispatchPluginModelEvent('beforeModelSave');
         }
@@ -53,6 +49,7 @@
                 );
                 return $this->dispatchPluginModelEvent($when.get_parent_class($this->owner).$what,null,$params);
             }
+            return $this->dispatchPluginModelEvent($when.$this->owner.$what,null,$params);
         }
         /**
          * method for dispatching plugin events
