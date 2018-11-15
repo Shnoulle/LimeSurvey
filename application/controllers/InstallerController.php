@@ -700,11 +700,13 @@ class InstallerController extends CController
     public function is_writable_recursive($sDirectory)
     {
         $sFolder = opendir($sDirectory);
+
         if ($sFolder === false) {
             return false; // Dir does not exist
         }
+
         while ($sFile = readdir($sFolder)) {
-            if ($sFile != '.' && $sFile != '..' &&
+            if ($sFile != '.' && $sFile != '..' && $sFile[0] != '.' &&
                 (!is_writable($sDirectory."/".$sFile) ||
                 (is_dir($sDirectory."/".$sFile) && !$this->is_writable_recursive($sDirectory."/".$sFile)))) {
                 closedir($sFolder);
@@ -754,6 +756,7 @@ class InstallerController extends CController
             default:
                 throw new Exception('Invalid type given.');
         }
+
         if ($exists) {
             $aData[$base.'Present'] = 'Found';
             if ((!$bRecursive && is_writable($path)) || ($bRecursive && $this->is_writable_recursive($path))) {
@@ -764,7 +767,6 @@ class InstallerController extends CController
             }
         }
         $bResult || $aData[$keyError] = true;
-
         return $bResult;
     }
 
