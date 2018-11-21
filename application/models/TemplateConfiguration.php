@@ -932,9 +932,8 @@ class TemplateConfiguration extends TemplateConfig
             $this->Ofiles[$oTemplate->template->name][$sField] = array();
         }
 
-
+        
         $files = $oTemplate->$sField;
-
         if (!empty($files)) {
             $oFiles = json_decode($files, true);
             if ($oFiles === null) {
@@ -948,6 +947,9 @@ class TemplateConfiguration extends TemplateConfig
                 );
                 return false;
             }
+        } else {
+            /* Else PHP notice  Undefined variable: oFiles  after fixing 14250 original issue */
+            $oFiles = array();
         }
 
         $this->Ofiles[$oTemplate->template->name][$sField] = $oFiles;
@@ -1242,6 +1244,10 @@ class TemplateConfiguration extends TemplateConfig
             $sAttribute = parent::__get($name);
             if ($sAttribute === 'inherit') {
                 // NOTE: this is object recursive (if parent configuration field is set to inherit, then it will lead to this method again.)
+                if(!property_exists($this->getParentConfiguration(),$name)) {
+                    // recursive but no parent, return null. Mantis issue #14250 (quick fix)
+                    return null;
+                }
                 $sAttribute = $this->getParentConfiguration()->$name;
             }
         } else {
