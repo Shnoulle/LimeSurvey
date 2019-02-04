@@ -149,6 +149,8 @@ class AdminTheme extends CFormModel
             App()->getClientScript()->registerPackage('bootstrap-switch');
             App()->getClientScript()->registerPackage('bootstrap-select2');
             App()->getClientScript()->registerPackage('bootstrap-datetimepicker');
+            /* without : griod are not loaded the 1st time, load always … */
+            App()->getClientScript()->registerScriptFile(Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('zii.widgets.assets')).'/gridview/jquery.yiigridview.js');
             App()->getClientScript()->registerPackage('font-roboto');
             App()->getClientScript()->registerPackage('font-icomoon');
             App()->getClientScript()->registerPackage('adminbasicjs');
