@@ -53,7 +53,7 @@ class Session extends CActiveRecord
         $sDatabasetype = Yii::app()->db->getDriverName();
         // MSSQL delivers hex data (except for dblib driver)
         if ($sDatabasetype == 'sqlsrv' || $sDatabasetype == 'mssql') {
-            $this->data = $this->hexToStr($this->data);
+            $this->data = $this->_hexToStr($this->data);
         }
         // Postgres delivers a stream pointer
         if (gettype($this->data) == 'resource') {
@@ -62,13 +62,42 @@ class Session extends CActiveRecord
         return parent::afterFind();
     }
 
-    private function hexToStr($hex)
+    /** @inheritdoc */
+    public function beforeSave()
     {
-        $string = '';
-        for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
-            $string .= chr(hexdec($hex[$i].$hex[$i + 1]));
+        $sDatabasetype = Yii::app()->db->getDriverName();
+        // MSSQL delivers hex data (except for dblib driver)
+        if (($sDatabasetype == 'sqlsrv' || $sDatabasetype == 'mssql') && is_string($this->data)) {
+            $this->data = $this->_strToHex($this->data);
+        }
+        return parent::beforeSave();
+    }
+
+    private function _strToHex($string)
+    {
+        $hex = '';
+        for ($i=0; $i<strlen($string); $i++){
+            $ord = ord($string[$i]);
+            $hexCode = dechex($ord);
+            $hex .= substr('0'.$hexCode, -2);
+        }
+        return strToUpper($hex);
+        /* OR 
+        $hexstr = unpack('H*', $string);
+        return array_shift($hexstr);
+        */
+    }
+
+    private function _hexToStr($hex)
+    {
+        $string='';
+        for ($i=0; $i < strlen($hex)-1; $i+=2){
+            $string .= chr(hexdec($hex[$i].$hex[$i+1]));
         }
         return $string;
+        /* OR 
+        return hex2bin("$hex");
+        */
     }
 
 }
