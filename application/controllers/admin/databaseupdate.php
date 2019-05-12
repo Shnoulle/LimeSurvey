@@ -38,13 +38,19 @@ class databaseupdate extends Survey_Common_Action
         $aData = $aViewUrls = [];
         if (isset($continue) && $continue == "yes") {
             $aViewUrls['output'] = CheckForDBUpgrades($continue);
-            $aData['display']['header'] = false;
         } else {
-            $aData['display']['header'] = true;
             $aViewUrls['output'] = CheckForDBUpgrades();
         }
-
-        
+        $aData['display']['header'] = true;
+        if(Yii::app()->getConfig('DBVersion') >= Yii::app()->getConfig('dbversionnumber')) {
+            $aData['display']['header'] = false;
+        }
+        //~ echo "<pre>";
+        //~ print_r([
+            //~ $aViewUrls,
+            //~ $aData,
+        //~ ]);
+        //~ die("</pre>");
         $aData['updatedbaction'] = true;
 
         $this->_renderWrappedTemplate('update', $aViewUrls, $aData, 'layout_minimal.php');

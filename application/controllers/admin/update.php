@@ -207,11 +207,10 @@ class update extends Survey_Common_Action
             $updateKey = getGlobalSetting("update_key");
             $updateModel = new UpdateForm();
             $destinationBuild = $_REQUEST['destinationBuild'];
-                $welcome = (array) $updateModel->getWelcomeMessage($updateKey, $destinationBuild);
-                $welcome['destinationBuild'] = $destinationBuild;
+            $welcome = (array) $updateModel->getWelcomeMessage($updateKey, $destinationBuild);
+            $welcome['destinationBuild'] = $destinationBuild;
             $welcome = (object) $welcome;
-
-                return $this->_renderWelcome($welcome);
+            return $this->_renderWelcome($welcome);
         }
     }
 

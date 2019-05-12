@@ -21,14 +21,14 @@
 function CheckForDBUpgrades($subaction = null)
 {
     $dbversionnumber = Yii::app()->getConfig('dbversionnumber');
-    $currentDBVersion = GetGlobalSetting('DBVersion');
-    if (intval($dbversionnumber) > intval($currentDBVersion)) {
+    $currentDBVersion = Yii::app()->getConfig('DBVersion');
+    if ($dbversionnumber > $currentDBVersion) {
         Yii::app()->loadHelper('update/updatedb');
         if (isset($subaction) && $subaction == "yes") {
             $header = Yii::app()->getController()->_getAdminHeader(false, true);
             $header = preg_replace('/<###begin###>/', '', $header);
             echo $header;
-            $result = db_upgrade_all(intval($currentDBVersion));
+            $result = db_upgrade_all($currentDBVersion);
             if ($result) {
                 $data =
                 '<div class="jumbotron message-box">'.

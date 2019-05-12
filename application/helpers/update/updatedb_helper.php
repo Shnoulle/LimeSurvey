@@ -25,15 +25,16 @@
 /**
 * @param integer $iOldDBVersion The previous database version
 * @param boolean $bSilent Run update silently with no output - this checks if the update can be run silently at all. If not it will not run any updates at all.
+* @param boolean $oneStep do one update only
 */
-function db_upgrade_all($iOldDBVersion, $bSilent = false)
+function db_upgrade_all($iOldDBVersion, $bSilent = false, $oneStep = true)
 {
     /**
      * If you add a new database version add any critical database version numbers to this array. See link
      * @link https://manual.limesurvey.org/Database_versioning for explanations
      * @var array $aCriticalDBVersions An array of cricital database version.
      */
-    $aCriticalDBVersions = array(310, 400);
+    $aCriticalDBVersions = array(310, 400, 401);
     $aAllUpdates         = range($iOldDBVersion + 1, Yii::app()->getConfig('dbversionnumber'));
 
     // If trying to update silenty check if it is really possible
@@ -55,7 +56,6 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
     $oDB                        = Yii::app()->getDb();
     $oDB->schemaCachingDuration = 0; // Deactivate schema caching
     Yii::app()->setConfig('Updating', true);
-
     try {
 
         // Version 1.80 had database version 132
@@ -2393,7 +2393,6 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
         if ($iOldDBVersion < 400) {
             // This update moves localization-dependant strings from question group/question/answer tables to related localization tables
             $oTransaction = $oDB->beginTransaction();
-            
             // Question table 
             $oDB->createCommand()->createTable('{{question_l10ns}}', array(
                 'id' =>  "pk",
@@ -2403,7 +2402,7 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
                 'language' =>  "string(20) NOT NULL"
             ));        
             $oDB->createCommand()->createIndex('{{idx1_question_l10ns}}', '{{question_l10ns}}', ['qid', 'language'], true);
-            $oDB->createCommand("INSERT INTO {{question_l10ns}} (qid, question, help, language) select qid, question, help, language from {{questions}}")->execute();
+      Yii::app()->setConfig('Updating', false);      $oDB->createCommand("INSERT INTO {{question_l10ns}} (qid, question, help, language) select qid, question, help, language from {{questions}}")->execute();
             $dataReader = $oDB->createCommand("SELECT q1.language, q1.qid FROM {{questions}} q1 INNER JOIN {{questions}} q2 ON q1.qid = q2.qid WHERE q1.language < q2.language")->query();
             while (($row = $dataReader->read()) !== false) {
                 $oDB->createCommand("delete from  {{questions}} where qid={$row['qid']} and language='{$row['language']}'")->execute();
@@ -2412,7 +2411,14 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
             dropColumn('{{questions}}', 'question');
             dropColumn('{{questions}}', 'help');
             dropColumn('{{questions}}', 'language');
-
+            $oDB->createCommand()->update('{{settings_global}}', array('stg_value'=>400), "stg_name='DBVersion'");
+            $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
+        }
+        if ($iOldDBVersion < 400.1) {
+            $oTransaction = $oDB->beginTransaction();
             // Groups table
             $oDB->createCommand()->createTable('{{group_l10ns}}', array(
                 'id' =>  "pk",
@@ -2433,7 +2439,14 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
             dropColumn('{{groups}}', 'group_name');
             dropColumn('{{groups}}', 'description');
             dropColumn('{{groups}}', 'language');
-
+            $oDB->createCommand()->update('{{settings_global}}', array('stg_value'=>400.1), "stg_name='DBVersion'");
+            $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
+        }
+        if ($iOldDBVersion < 400.2) {
+            $oTransaction = $oDB->beginTransaction();
             // Answers table
             // Answers now have a proper answer ID - wohoo!
             $oDB->createCommand()->createTable('{{answer_l10ns}}', array(
@@ -2476,7 +2489,14 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
             try{ setTransactionBookmark(); $oDB->createCommand()->dropIndex('answer_idx_10','{{answertemp}}');} catch(Exception $e) { rollBackToTransactionBookmark(); };
             $oDB->createCommand()->dropTable('answertemp');
             $oDB->createCommand()->createIndex('{{answer_idx_10}}', '{{answers}}', ['qid', 'code', 'scale_id'], true);
-            
+            $oDB->createCommand()->update('{{settings_global}}', array('stg_value'=>400.2), "stg_name='DBVersion'");
+            $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
+        }
+        if ($iOldDBVersion < 400.3) {
+            $oTransaction = $oDB->beginTransaction();
             // Labels table
             // label_l10ns
             $oDB->createCommand()->createTable('{{label_l10ns}}', array(
@@ -2519,17 +2539,26 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
 
             // Extend language field on labelsets
             alterColumn('{{labelsets}}', 'languages', "string(255)", false);
-
+            $oDB->createCommand()->update('{{settings_global}}', array('stg_value'=>400.3), "stg_name='DBVersion'");
+            $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
+        }
+        if ($iOldDBVersion < 400.4) {
+            $oTransaction = $oDB->beginTransaction();
             // Extend question type field length
             alterColumn('{{questions}}', 'type', 'string(30)', false, 'T');
             
             // Drop autoincrement on timings table primary key
             upgradeSurveyTimings350();
 
-            $oDB->createCommand()->update('{{settings_global}}', array('stg_value'=>400), "stg_name='DBVersion'");
-
+            $oDB->createCommand()->update('{{settings_global}}', array('stg_value'=>400.4), "stg_name='DBVersion'");
             $oTransaction->commit();
-        }   
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
+        }
 
         /**
          * Add load_error and load_error_message to plugin system.
@@ -2543,17 +2572,20 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
             $oDB->createCommand()->update('{{settings_global}}', array('stg_value'=>401), "stg_name='DBVersion'");
 
             $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
         }
 
         if ($iOldDBVersion < 402) {
             $oTransaction = $oDB->beginTransaction();
-
             // Plugin type is either "core", "user" or "upload" (different folder locations).
             $oDB->createCommand()->addColumn('{{plugins}}', 'plugin_type', "string(6) default 'user'");
-
             $oDB->createCommand()->update('{{settings_global}}', array('stg_value'=>402), "stg_name='DBVersion'");
-
             $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
         }
             
         /**
@@ -2565,6 +2597,9 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
             upgradeSurveyTables402('utf8mb4_bin');
             $oDB->createCommand()->update('{{settings_global}}',array('stg_value'=>403),"stg_name='DBVersion'");
             $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
         }
 
         /**
@@ -2575,6 +2610,9 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
             createSurveysGroupSettingsTable($oDB);
             $oDB->createCommand()->update('{{settings_global}}',array('stg_value'=>404),"stg_name='DBVersion'");
             $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
         }
 
         // In case any LS4 user missed database update from version 356.
@@ -2591,6 +2629,9 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
             )->execute();
             $oDB->createCommand()->update('{{settings_global}}',array('stg_value'=>405),"stg_name='DBVersion'");
             $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
         }
 
         /**
@@ -2622,6 +2663,9 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
 
             $oDB->createCommand()->update('{{settings_global}}',array('stg_value'=>406),"stg_name='DBVersion'");
             $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
         }
 
         if ($iOldDBVersion < 407) {
@@ -2671,6 +2715,9 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
 
             $oDB->createCommand()->update('{{settings_global}}',array('stg_value'=>407),"stg_name='DBVersion'");
             $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
         }
 
         if ($iOldDBVersion < 408) {
@@ -2678,6 +2725,9 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
             $oDB->createCommand()->update('{{participant_attribute_names}}',array('encrypted'=>'Y'),"core_attribute='Y'");
             $oDB->createCommand()->update('{{settings_global}}',array('stg_value'=>408),"stg_name='DBVersion'");
             $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
         }
 
         if ($iOldDBVersion < 409) {
@@ -2696,6 +2746,9 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
             $oDB->createCommand()->update('{{participant_attribute_names}}',array('encrypted'=>$sEncrypted),"core_attribute='Y'");
             $oDB->createCommand()->update('{{settings_global}}',array('stg_value'=>409),"stg_name='DBVersion'");
             $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
         }
 
         if ($iOldDBVersion < 410) {
@@ -2703,6 +2756,9 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
             $oDB->createCommand()->addColumn('{{question_l10ns}}', 'script', " text NULL default NULL");
             $oDB->createCommand()->update('{{settings_global}}',array('stg_value'=>410),"stg_name='DBVersion'");
             $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
         }
 
         if($iOldDBVersion < 411) {
@@ -2710,6 +2766,9 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
             $oDB->createCommand()->addColumn('{{plugins}}','priority',"int NOT NULL default 0");
             $oDB->createCommand()->update('{{settings_global}}',array('stg_value'=>411),"stg_name='DBVersion'");
             $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
         }
 
         if($iOldDBVersion < 412) {
@@ -2726,10 +2785,16 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
             }
             $oDB->createCommand()->update('{{settings_global}}',array('stg_value'=>412),"stg_name='DBVersion'");
             $oTransaction->commit();
+            if($oneStep) {
+                finalizeUpgrade($iOldDBVersion);
+            }
         }
       
     } catch (Exception $e) {
         Yii::app()->setConfig('Updating', false);
+        if (defined('YII_DEBUG') && YII_DEBUG) {
+            throw $e;
+        }
         $oTransaction->rollback();
         // Activate schema caching
         $oDB->schemaCachingDuration = 3600;
@@ -2755,6 +2820,11 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
         return false;
     }
 
+    finalizeUpgrade($iOldDBVersion);
+}
+
+function finalizeUpgrade($iOldDBVersion) {
+    $oDB = Yii::app()->getDb();
     // Activate schema cache first - otherwise it won't be refreshed!
     $oDB->schemaCachingDuration = 3600;
     // Load all tables of the application in the schema
@@ -2798,7 +2868,6 @@ function db_upgrade_all($iOldDBVersion, $bSilent = false)
     Yii::app()->setConfig('Updating', false);
     return true;
 }
-
 
 /**
  * @param string $sMySQLCollation
