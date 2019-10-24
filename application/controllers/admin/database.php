@@ -259,12 +259,7 @@ class database extends Survey_Common_Action
                     if (Yii::app()->request->getPost('samedefault') == 1) {
                         $sLanguage = $aSurveyLanguages[0]; // turn
                     }
-
                     if (Yii::app()->request->getPost('defaultanswerscale_0_'.$sLanguage) == 'EM') {
-// Case EM, write expression to database
-                        $this->_updateDefaultValues($this->iQuestionID, 0, 0, '', $sLanguage, Yii::app()->request->getPost('defaultanswerscale_0_'.$sLanguage.'_EM'));
-                    } else {
-                        // Case "other", write list value to database
                         $this->_updateDefaultValues($this->iQuestionID, 0, 0, '', $sLanguage, Yii::app()->request->getPost('defaultanswerscale_0_'.$sLanguage));
                     }
                     ///// end yes/no

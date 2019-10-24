@@ -49,7 +49,7 @@
                 if(($sDefaultValue == 'N') || ($sDefaultValue == 'Y') || ($sDefaultValue == '') ){ //|| 'Y' || NULL)){
                 $select = $defaultValues;
             }else{
-                $select = 'EM';
+                $select = '*#free#*'; // Use an unusuable value for all answers
                 $emValue = $defaultValues;
             }
             }
@@ -61,30 +61,26 @@
                 $aList = array(
                     'N'    => gT('No','unescaped'),
                     'Y'    => gT('Yes','unescaped'),
-                    'EM'   => gT('EM value','unescaped')
+                    '*#free#*'   => gT('Free text, allow expression','unescaped')
                 );
 
                 $aHtmlOptions = array(
                     'empty'    => gT('<No default value>'),
                     'class'    => $sElement_id . ' form-control',
                     'onchange' => '// show EM Value Field
-                                   if ($(this).val() == "EM"){
-                                       $("#"+$(this).closest("select").attr("id")+ "_EM").removeClass("hide");
+                                   if ($(this).val() == "*#free#*"){
+                                       $("#"+$(this).closest("select").attr("id")+ "_free").prop("disabled",false).removeClass("hidden");
                                    }else{
-                                       $("#"+$(this).closest("select").attr("id")+ "_EM").addClass("hide");} '
+                                       $("#"+$(this).closest("select").attr("id")+ "_free").prop("disabled",true).addClass("hidden");
+                                   } '
                 );
-
                 echo CHtml::dropDownList($sElement_id, $select, $aList, $aHtmlOptions);
 
-                // textfield preparation
-                if(empty($defaultValues) ||  $defaultValues == 'Y')
-                {
-                    $sEmfield_css_class = 'hide';
-                }
-                echo CHtml::textField ($sElement_id . '_EM', $emValue,array(
-                        'id'    => $sElement_id . '_EM',
-                        'class' => $sEmfield_css_class,
-                        'width' => 100
+                echo CHtml::textArea ($sElement_id, $emValue,array(
+                        'id'    => $sElement_id . '_free',
+                        'class' => 'form-control'.(empty($emValue) ? " hidden" : ""),
+                        'disabled' => empty($emValue),
+                        'rows' => 1,
                     ));
             }
         }
